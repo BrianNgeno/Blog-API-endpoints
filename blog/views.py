@@ -67,7 +67,7 @@ class BlogAPIView(GenericAPIView,CustomPagination):
         return Response(blogs, status=status.HTTP_201_CREATED)
 
     def get(self, request):
-        def get_paginated_response(self, data, user, att_summary):
+        def get_paginated_response(self, data):
             return Response(OrderedDict([
                 ('count', self.page.paginator.count),
                 ('next', self.get_next_link()),
@@ -76,7 +76,7 @@ class BlogAPIView(GenericAPIView,CustomPagination):
                 
             ]))
         serializer = self.serializer_class(Blog.objects.all(), many=True, allow_empty=True)
-        paginated_data = self.paginate_queryset(serializer.data, request)
+        paginated_data = self.paginate_queryset(serializer.data)
         response = self.get_paginated_response(paginated_data)
         return response
         # blogs_serialized = serializers.serialize('json', Blog.objects.get_queryset())
